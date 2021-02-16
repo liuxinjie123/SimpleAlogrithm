@@ -3,8 +3,9 @@
  * 其中a是一个数字。
  * 例如2+22+222+2222+22222(此时共有5个数相加)，几个数相加有键盘控制。
  */
-#include <stdio.h>
+#include <iostream>
 #include <math.h>
+using namespace std;
 
 int getSum(int n, int times) {
     int sum = 0;
@@ -17,13 +18,13 @@ int getSum(int n, int times) {
 }
 
 int main() {
+    cout<<" c++"<<endl;
     int n, times;
-    printf(" please input the num: ");
-    scanf("%d", &n);
-    printf(" please input the times: ");
-    scanf("%d", &times);
+    cout<<" please input the num: ";
+    cin>>n;
+    cout<<" please input the times: ";
+    cin>>times;
     int sum = getSum(n, times);
-    printf(" sum:%d", sum);
-    printf("\n\n");
+    cout<<" sum="<<sum<<endl<<endl;
     return 0;
 }
