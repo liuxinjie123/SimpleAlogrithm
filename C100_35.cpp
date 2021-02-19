@@ -35,11 +35,13 @@ int main() {
     }
 
     int i=1;
-    while(buf[i].next != buf[i].prev) {
+    int start = 0;
+    while(buf[start].next != buf[start].prev) {
         if (i%3 == 0) {
-            buf[buf[i].prev].next = buf[i].next;
-            buf[buf[i].next].prev = buf[i].prev;
+            buf[buf[start].prev].next = buf[start].next;
+            buf[buf[start].next].prev = buf[start].prev;
         }
+        start = buf[start].next;
         i++;
     }
     printf("%d %d %d\n\n", buf[i].value, buf[i].prev, buf[i].next);
