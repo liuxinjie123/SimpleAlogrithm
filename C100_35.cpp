@@ -26,7 +26,7 @@ int main() {
             buf[i].prev = n-1;
             buf[i].next = i+1;
         } else if (i == n-1) {
-            buf[i].prev = n-2;
+            buf[i].prev = i-1;
             buf[i].next = 0;
         } else {
             buf[i].prev = i-1;
@@ -36,7 +36,7 @@ int main() {
 
     int i=1;
     int start = 0;
-    while(buf[start].next != buf[start].prev) {
+    while(start != buf[start].next && start != buf[start].prev) {
         if (i%3 == 0) {
             buf[buf[start].prev].next = buf[start].next;
             buf[buf[start].next].prev = buf[start].prev;
