@@ -1,5 +1,7 @@
-#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
+
+using namespace std;
 
 #define OK 1
 #define ERROR 0
@@ -21,25 +23,25 @@ typedef struct {
 } SqList;
 
 // init
-int init(SqList *L) {
-    L->elem = (Person *)malloc(MAXSIZE * sizeof(Person));
-    if (!L->elem) {
+int init(SqList &L) {
+    L.elem = new Person[MAXSIZE];
+    if (!L.elem) {
         return OVERFLOW;
     }
-    L->length = 0;
+    L.length = 0;
     return OK;
 }
 
 // insert
-int insert(SqList *L, int i, Person person) {
-    if (i < 1 || i > L->length+1) {
+int insert(SqList &L, int i, Person person) {
+    if (i < 1 || i > L.length+1) {
         return ERROR;
     }
-    for (int j=L->length; j>i-1; j--) {
-        L->elem[j+1] = L->elem[j];
+    for (int j=L.length; j>i-1; j--) {
+        L.elem[j+1] = L.elem[j];
     }
-    L->elem[i-1] = person;
-    L->length++;
+    L.elem[i-1] = person;
+    L.length++;
     return OK;
 }
 
@@ -54,29 +56,29 @@ int locate(SqList L, Person person) {
 }
 
 // get by item
-int getByItem(SqList L, int i, Person *person) {
+int getByItem(SqList L, int i, Person &person) {
     if (i < 1 || i > L.length) {
         return ERROR;
     }
-    *person = L.elem[i-1];
+    person = L.elem[i-1];
     return OK;
 }
 
-int deleteByItem(SqList *L, int i) {
-    if (i < 1 || i> L->length) {
+int deleteByItem(SqList &L, int i) {
+    if (i < 1 || i> L.length) {
         return ERROR;
     }
-    for (int j=i; j<L->length-1; j++) {
-        L->elem[j] = L->elem[j+1];
+    for (int j=i; j<L.length-1; j++) {
+        L.elem[j] = L.elem[j+1];
     }
-    L->length--;
+    L.length--;
     return OK;
 }
 
-int deleteByValue(SqList *L, Person person) {
+int deleteByValue(SqList &L, Person person) {
     int place;
-    for (int i=0; i<L->length; i++) {
-        if (L->elem[i].id == person.id) {
+    for (int i=0; i<L.length; i++) {
+        if (L.elem[i].id == person.id) {
             place = i;
         }
     }
@@ -94,26 +96,23 @@ int printList(SqList L) {
 
 int main() {
     SqList L;
-    init(&L);
+    init(L);
 
-    Person person = {
-        .id = 1,
-        .name = "xj",
-        .phone = "15619966666"
-    };
+    Person person = {1,"xj","15619966666"};
 
 
-    insert(&L, 1, person);
+    insert(L, 1, person);
     int place = locate(L, person);
     printf("%d\n", place);
 
     Person person2;
-    getByItem(L, 1, &person2);
+    getByItem(L, 1, person2);
     printf("%d %s %s\n", person2.id, person2.name, person2.phone);
 
     printList(L);
 
 }
+
 
 
 

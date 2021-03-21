@@ -5,14 +5,15 @@
 #define ERROR 0
 #define OVERFLOW -2
 
-// 定义线性表的最大长度
-#define MAXSIZE 100
+// 表长度的初始定义
+#define InitSize 100
 
 typedef struct {
     // 存储空间的基地址
     int *elem;
     // 数组的当前长度
     int length;
+    int MaxSize;
 } SqList;  // 顺序表的类型定义
 
 
@@ -20,13 +21,28 @@ typedef struct {
 // 初始化表。构造一个空的线性表
 int InitList(SqList *L) {
     // 构造一个空的顺序表L
-    // 为顺序表分配一个大小为 MAXSIZE的数组空间
-    L->elem = (int *)malloc(MAXSIZE * sizeof(int));
+    // 为顺序表分配一个大小为 InitSize 的数组空间
+    L->elem = (int *)malloc(InitSize * sizeof(int));
     if(!L->elem) {
         exit(OVERFLOW);
     }
     L->length = 0;
+    L->MaxSize = InitSize;
     return OK;
+}
+
+//增加动态数组长度len
+int IncreaseSize(SqList *L,int len){
+    //(int*)realloc(L.data,L.MaxSize+len);
+	int* p=L->elem;
+	L->elem = (int*)malloc((L->MaxSize+len)*sizeof(int));
+	for(int i=0; i<L->length; i++){
+		L->elem[i] = p[i];//将数据复制到新区域
+	}
+	L->MaxSize = L->MaxSize + len;
+	//释放p所指向的内存区域,函数结束后p会被系统回收。
+	free(p);
+	return OK;
 }
 
 // 求表长
@@ -57,7 +73,7 @@ int ListInsert(SqList *L, int i, int e) {
     if (i < 1 || i > L->length+1) {
         return ERROR;
     }
-    if (L->length == MAXSIZE) {
+    if (L->length >= L->MaxSize) {
         return ERROR;
     }
     for (int j = L->length-1; j>=i-1; j--) {

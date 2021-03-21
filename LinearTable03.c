@@ -16,18 +16,18 @@ typedef struct {
 } Person;
 
 typedef struct {
-    Person *elem;
+    Person elem[MAXSIZE];
     int length;
 } SqList;
 
 // init
 int init(SqList *L) {
-    L->elem = (Person *)malloc(MAXSIZE * sizeof(Person));
-    if (!L->elem) {
-        return OVERFLOW;
-    }
-    L->length = 0;
-    return OK;
+    for(int i=0; i<MAXSIZE; i++){
+        Person p1 = {};
+		L->elem[i]=p1;
+	}
+	L->length=MAXSIZE;
+	return OK;
 }
 
 // insert
@@ -114,6 +114,7 @@ int main() {
     printList(L);
 
 }
+
 
 
 

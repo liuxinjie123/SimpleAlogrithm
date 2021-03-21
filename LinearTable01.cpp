@@ -1,5 +1,7 @@
-#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
+
+using namespace std;
 
 #define OK 1
 #define ERROR 0
